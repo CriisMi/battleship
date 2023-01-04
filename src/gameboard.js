@@ -17,23 +17,37 @@ const gameboard = () => {
   dir = 9: 9 0'clock*/
   const addShip = (length, i, j, dir = 0) => {
     ships[shipCount] = ship(length);
-    shipCount++;
+
     if (dir === 0) {
       for (let k = 0; k < length; k++) {
-        board[i - k][j] = length;
+        board[i - k][j] = shipCount;
       }
     } else if (dir === 3) {
       for (let k = 0; k < length; k++) {
-        board[i][j + k] = length;
+        board[i][j + k] = shipCount;
       }
     } else if (dir === 6) {
       for (let k = 0; k < length; k++) {
-        board[i + k][j] = length;
+        board[i + k][j] = shipCount;
       }
     } else if (dir === 9) {
       for (let k = 0; k < length; k++) {
-        board[i][j - k] = length;
+        board[i][j - k] = shipCount;
       }
+    }
+
+    shipCount++;
+  };
+
+  const receiveAttack = (i, j) => {
+    /* if missed shot cell value will change to -1 
+    if hit cell value will change to -2*/
+    if (board[i][j] === undefined) {
+      board[i][j] = -1;
+    } else {
+      let ship = board[i][j];
+      ships[ship].hit();
+      board[i][j] = -2;
     }
   };
 
@@ -43,7 +57,9 @@ const gameboard = () => {
 
   const getBoard = () => board;
 
-  return { getBoard, addShip, getCoordinateStatus };
+  const getShip = (n) => ships[n];
+
+  return { getBoard, addShip, getCoordinateStatus, receiveAttack, getShip };
 };
 
 export { gameboard };

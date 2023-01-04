@@ -18,3 +18,9 @@ test("change player when shot and miss", () => {
   board2.receiveAttack(2, 4);
   expect(player2.isTurn()).toBe(true);
 });
+
+test("do not change player when shot and hit", () => {
+  board1.addShip(2, 2, 3, 3);
+  board1.receiveAttack(2, 4);
+  expect(player2.isTurn()).toBe(true);
+});

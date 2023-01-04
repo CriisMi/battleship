@@ -26,3 +26,15 @@ test("recieve attack will change record coordinates of missed shot", () => {
   board.receiveAttack(4, 0);
   expect(board.getBoard()[4][0]).toBe(-1);
 });
+
+test("check if all ships are sunk returns false if not", () => {
+  board.addShip(1, 7, 8, 0);
+  board.receiveAttack(4, 1);
+  board.receiveAttack(4, 3);
+  expect(board.checkAllSunk()).toBe(false);
+});
+
+test("check if all ships are sunk returns true", () => {
+  board.receiveAttack(7, 8);
+  expect(board.checkAllSunk()).toBe(true);
+});

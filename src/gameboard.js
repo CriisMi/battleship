@@ -51,6 +51,15 @@ const gameboard = () => {
     }
   };
 
+  const checkAllSunk = () => {
+    for (let i = 0; i < ships.length; i++) {
+      if (!ships[i].isSunk()) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const getCoordinateStatus = (i, j) => {
     return board[i][j];
   };
@@ -59,7 +68,14 @@ const gameboard = () => {
 
   const getShip = (n) => ships[n];
 
-  return { getBoard, addShip, getCoordinateStatus, receiveAttack, getShip };
+  return {
+    getBoard,
+    addShip,
+    getCoordinateStatus,
+    receiveAttack,
+    getShip,
+    checkAllSunk,
+  };
 };
 
 export { gameboard };

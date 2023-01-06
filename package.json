@@ -2,6 +2,7 @@
   "name": "battleship",
   "version": "1.0.0",
   "description": "",
+  "main": "index.js",
   "private": true,
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
@@ -12,7 +13,6 @@
     "test": "jest",
     "build": "webpack"
   },
-  "type": "module",
   "dependencies": {
     "pubsub-js": "^1.9.4"
   }

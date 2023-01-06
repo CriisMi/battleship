@@ -20,7 +20,28 @@ test("change player when shot and miss", () => {
 });
 
 test("do not change player when shot and hit", () => {
-  board1.addShip(2, 2, 3, 3);
-  board1.receiveAttack(2, 4);
+  board1.addShip(4, 0, 0, 6);
+  board1.receiveAttack(3, 0);
   expect(player2.isTurn()).toBe(true);
+});
+
+test("player hit retruns coordinate that are not marked as hit or miss", () => {
+  const boardtest = () => {
+    const getBoard = () => [
+      [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+      [undefined, -1, -1, -1, -1, -2, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+      [-1, -2, -1, -2, -1, -1, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1, -1, -2, -1, -1, -1],
+      [-1, -1, -1, -1, -1, -1, -2, -1, -1, -1],
+      [-1, -1, -2, -1, -1, -1, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+    ];
+
+    return { getBoard };
+  };
+  let boardt = boardtest();
+  expect(player2.hit(boardt)).toStrictEqual([2, 0]);
 });

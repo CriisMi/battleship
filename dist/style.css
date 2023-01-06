@@ -1,0 +1,21 @@
+.gameboards {
+  display: flex;
+  justify-content: center;
+}
+
+.field {
+  margin: 15px;
+  width: 400px;
+  height: 400px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 1px;
+  border: solid 1px;
+  color: black;
+}
+
+.field > div {
+  border: solid 1px;
+  color: black;
+}

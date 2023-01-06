@@ -7,7 +7,18 @@ const player = () => {
   const changeStatus = () => (isCurrent = !isCurrent);
   PubSub.subscribe("missed_shot", changeStatus());
 
-  return { isTurn, changeStatus };
+  const hit = (board) => {
+    let b = board.getBoard();
+    let i;
+    let j;
+    do {
+      i = Math.floor(Math.random() * 10);
+      j = Math.floor(Math.random() * 10);
+    } while (b[i][j] === -1 || b[i][j] === -2);
+    return [i, j];
+  };
+
+  return { isTurn, changeStatus, hit };
 };
 
 export { player };

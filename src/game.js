@@ -12,6 +12,8 @@ const game = () => {
   createBoard(field1);
   let field2 = document.querySelector(".gameboards").children[1];
   createBoard(field2);
+
+  let board1 = gameboard1.getBoard();
 };
 
 export { game };

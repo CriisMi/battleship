@@ -5,16 +5,20 @@
 
 .field {
   margin: 15px;
-  width: 400px;
-  height: 400px;
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
+  display: flex;
+  flex-direction: column;
+
   border: solid 1px;
   color: black;
 }
 
-.field > div {
+.row {
+  display: flex;
+}
+
+.cell {
+  height: 40px;
+  width: 40px;
   border: solid 1px;
   color: black;
 }

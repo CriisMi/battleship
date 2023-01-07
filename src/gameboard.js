@@ -46,7 +46,7 @@ const gameboard = () => {
     if (board[i][j] === undefined) {
       board[i][j] = -1;
       PubSub.publish("missed_shot");
-    } else {
+    } else if (board[i][j] !== -1 && board[i][j] !== -2) {
       let ship = board[i][j];
       ships[ship].hit();
       board[i][j] = -2;

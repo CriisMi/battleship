@@ -1,9 +1,10 @@
 import { gameboard } from "./gameboard";
-import { createBoard, displayBoard } from "./interface";
+import { createBoard, displayBoard, shootEvents } from "./interface";
 import { player } from "./player";
 
 const game = () => {
   let player1 = player();
+  player1.changeStatus();
   let gameboard1 = gameboard();
   let player2 = player();
   let gameboard2 = gameboard();
@@ -13,130 +14,9 @@ const game = () => {
   let field2 = document.querySelector(".gameboards").children[1];
   createBoard(field2);
 
-  let board1 = [
-    [
-      -1,
-      -2,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-    [
-      1,
-      1,
-      1,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-    [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-    [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-    [
-      2,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-    [
-      2,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-    [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-    [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-    [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-    [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-  ];
-
-  displayBoard(board1, field1);
+  displayBoard(gameboard1, field1);
+  displayBoard(gameboard2, field2, 1);
+  shootEvents(gameboard2, field2);
 };
 
 export { game };

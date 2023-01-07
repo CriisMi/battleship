@@ -1,5 +1,11 @@
 import { gameboard } from "./gameboard";
-import { createBoard, displayBoard, shootEvents } from "./interface";
+import PubSub from "pubsub-js";
+import {
+  activateBoard,
+  createBoard,
+  displayBoard,
+  playTurn,
+} from "./interface";
 import { player } from "./player";
 
 const game = () => {
@@ -16,7 +22,11 @@ const game = () => {
 
   displayBoard(gameboard1, field1);
   displayBoard(gameboard2, field2, 1);
-  shootEvents(gameboard2, field2);
+  activateBoard(gameboard2, field2);
+
+  PubSub.subscribe("missed_shot", () => {
+    playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
+  });
 };
 
 export { game };

@@ -4,8 +4,13 @@ const player = () => {
   let isCurrent = false;
   const isTurn = () => isCurrent;
 
-  const changeStatus = () => (isCurrent = !isCurrent);
-  PubSub.subscribe("missed_shot", changeStatus());
+  const changeStatus = () => {
+    isCurrent = !isCurrent;
+  };
+
+  PubSub.subscribe("missed_shot", () => {
+    changeStatus();
+  });
 
   const hit = (board) => {
     let b = board.getBoard();

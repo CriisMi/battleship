@@ -1,6 +1,5 @@
 .gameboards {
   display: flex;
-  justify-content: center;
 }
 
 .field {
@@ -23,4 +22,17 @@
   color: black;
   padding: 0px;
   margin: 0px;
+}
+
+.display {
+  margin: 15px;
+  width: 100px;
+  height: 100px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+}
+
+.display > div {
+  border: solid 1px lightgrey;
 }

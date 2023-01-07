@@ -2,13 +2,25 @@ import { gameboard } from "./gameboard";
 import PubSub from "pubsub-js";
 import {
   activateBoard,
+  addShipDisplay,
+  changeShipDirection,
   createBoard,
   displayBoard,
+  displayShipToAdd,
   playTurn,
 } from "./interface";
 import { player } from "./player";
 
 const game = () => {
+  addShipDisplay();
+  let shipDirection = 3;
+  let shipCount = 0;
+  displayShipToAdd(3, shipDirection);
+  PubSub.subscribe("change_direction", () => {
+    shipDirection = changeShipDirection(shipDirection);
+    displayShipToAdd(3, shipDirection);
+  });
+
   let player1 = player();
   player1.changeStatus();
   let gameboard1 = gameboard();

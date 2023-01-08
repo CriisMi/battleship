@@ -83,14 +83,19 @@ function addShipDisplay() {
   });
 }
 
-function changeShipDirection(shipDirection) {
-  if (shipDirection === 9) {
-    shipDirection = 0;
+function changeShipDirection(direction) {
+  let dir = direction.toString();
+  if (dir === "0,1") {
+    direction = [1, 0];
+  } else if (dir === "1,0") {
+    direction = [0, -1];
+  } else if (dir === "0,-1") {
+    direction = [-1, 0];
   } else {
-    shipDirection += 3;
+    direction = [0, 1];
   }
 
-  return shipDirection;
+  return direction;
 }
 
 function displayShipToAdd(length, direction) {
@@ -98,49 +103,43 @@ function displayShipToAdd(length, direction) {
   for (let i = 0; i < 49; i++) {
     container.children[i].style.backgroundColor = "white";
   }
-  let ship = returnShipToAdd(length, direction);
-  for (let i = 0; i < ship.length; i++) {
-    container.children[ship[i]].style.backgroundColor = "black";
+  for (let i = 0; i < length; i++) {
+    container.children[
+      24 - direction[1] * i * 7 + direction[0] * i
+    ].style.backgroundColor = "black";
   }
   container.children[24].style.backgroundColor = "red";
 }
 
-function returnShipToAdd(length, direction) {
-  let display = [];
-  if (length === 1) {
-    display = [24];
-  } else if (length === 2) {
-    if (direction === 0) {
-      display = [24, 17];
-    } else if (direction === 3) {
-      display = [24, 25];
-    } else if (direction === 6) {
-      display = [24, 31];
-    } else if (direction === 9) {
-      display = [24, 23];
-    }
-  } else if (length === 3) {
-    if (direction === 0) {
-      display = [24, 17, 10];
-    } else if (direction === 3) {
-      display = [24, 25, 26];
-    } else if (direction === 6) {
-      display = [24, 31, 38];
-    } else if (direction === 9) {
-      display = [24, 23, 22];
-    }
-  } else if (length === 4) {
-    if (direction === 0) {
-      display = [24, 17, 10, 3];
-    } else if (direction === 3) {
-      display = [24, 25, 26, 27];
-    } else if (direction === 6) {
-      display = [24, 31, 38, 45];
-    } else if (direction === 9) {
-      display = [24, 23, 22, 21];
+function addShipOnField(gameBoard, field, length, direction) {
+  let dir = [];
+  if (direction === 0) {
+    dir = [0, 1];
+  } else if (direction === 3) {
+    dir = [1, 0];
+  } else if (direciton === 6) {
+    dir = [0, -1];
+  } else {
+    dir = [-1, 0];
+  }
+  let board = gameBoard.getBoard();
+  for (let i = 0; i < 10; i++) {
+    let row = field.children[i];
+    for (let j = 0; j < 10; j++) {
+      let cell = row.children[j];
+      if (board[i][j] === undefined) {
+        cell.style.backgroundColor = "white";
+      } else if (board[i][j] === -1) {
+        cell.style.backgroundColor = "grey";
+      } else if (board[i][j] === -2) {
+        cell.style.backgroundColor = "red";
+      } else {
+        if (player === 0) {
+          cell.style.backgroundColor = "black";
+        }
+      }
     }
   }
-  return display;
 }
 
 export {

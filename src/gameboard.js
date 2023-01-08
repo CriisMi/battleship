@@ -12,31 +12,11 @@ const gameboard = () => {
     }
   }
 
-  /* ship direction dir = 0: 12 o'clck
-  dir = 3: 3 o'clock
-  dir = 6: 6 o'clock 
-  dir = 9: 9 0'clock*/
-  const addShip = (length, i, j, dir = 0) => {
+  const addShip = (length, i, j, dir = [0, 1]) => {
     ships[shipCount] = ship(length);
-
-    if (dir === 0) {
-      for (let k = 0; k < length; k++) {
-        board[i - k][j] = shipCount;
-      }
-    } else if (dir === 3) {
-      for (let k = 0; k < length; k++) {
-        board[i][j + k] = shipCount;
-      }
-    } else if (dir === 6) {
-      for (let k = 0; k < length; k++) {
-        board[i + k][j] = shipCount;
-      }
-    } else if (dir === 9) {
-      for (let k = 0; k < length; k++) {
-        board[i][j - k] = shipCount;
-      }
+    for (let k = 0; k < length; k++) {
+      board[i - dir[1] * k][j + dir[0] * k] = shipCount;
     }
-
     shipCount++;
   };
 

@@ -13,7 +13,7 @@ import { player } from "./player";
 
 const game = () => {
   addShipDisplay();
-  let shipDirection = 3;
+  let shipDirection = [0, 1];
   let shipCount = 0;
   displayShipToAdd(3, shipDirection);
   PubSub.subscribe("change_direction", () => {
@@ -34,11 +34,13 @@ const game = () => {
 
   displayBoard(gameboard1, field1);
   displayBoard(gameboard2, field2, 1);
-  activateBoard(gameboard2, field2);
 
-  PubSub.subscribe("missed_shot", () => {
-    playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
-  });
+  if (shipCount === 10) {
+    activateBoard(gameboard2, field2);
+    PubSub.subscribe("missed_shot", () => {
+      playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
+    });
+  }
 };
 
 export { game };

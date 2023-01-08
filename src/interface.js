@@ -155,6 +155,7 @@ function activateBoard1(
           ) {
             gameBoard.addShip(length, i, j, direction);
             displayBoard(gameBoard, field);
+            PubSub.publish("ship_added");
           }
         });
       }
@@ -183,4 +184,5 @@ export {
   displayShipToAdd,
   changeShipDirection,
   addShipOnField,
+  deactivateBoard,
 };

@@ -6,6 +6,7 @@ import {
   addShipOnField,
   changeShipDirection,
   createBoard,
+  deactivateBoard,
   displayBoard,
   displayShipToAdd,
   playTurn,
@@ -15,7 +16,17 @@ import { player } from "./player";
 const game = () => {
   addShipDisplay();
   let shipDirection = [0, 1];
-  let shipCount = 10;
+  let shipCount = 0;
+  PubSub.subscribe("ship_added", () => {
+    shipCount += 1;
+    if (shipCount === 10) {
+      deactivateBoard(gameboard1, field1);
+      activateBoard(gameboard2, field2);
+      PubSub.subscribe("fired_shot", () => {
+        playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
+      });
+    }
+  });
 
   let player1 = player();
   player1.changeStatus();
@@ -38,13 +49,6 @@ const game = () => {
     displayShipToAdd(3, shipDirection);
     addShipOnField(gameboard1, field1, 3, shipDirection);
   });
-
-  if (shipCount === 10) {
-    activateBoard(gameboard2, field2);
-    PubSub.subscribe("fired_shot", () => {
-      playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
-    });
-  }
 };
 
 export { game };

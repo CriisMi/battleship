@@ -17,14 +17,27 @@ const game = () => {
   addShipDisplay();
   let shipDirection = [0, 1];
   let shipCount = 0;
+  let shipLength = 4;
   PubSub.subscribe("ship_added", () => {
     shipCount += 1;
-    if (shipCount === 10) {
+    if (shipCount > 5) {
+      shipLength = 1;
+    } else if (shipCount > 2) {
+      shipLength = 2;
+    } else if (shipCount > 0) {
+      shipLength = 3;
+    }
+    console.log(shipCount);
+    if (shipCount >= 10) {
       deactivateBoard(gameboard1, field1);
       activateBoard(gameboard2, field2);
       PubSub.subscribe("fired_shot", () => {
         playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
       });
+    } else {
+      displayShipToAdd(shipLength, shipDirection);
+
+      addShipOnField(gameboard1, field1, shipLength, shipDirection);
     }
   });
 
@@ -42,12 +55,12 @@ const game = () => {
   displayBoard(gameboard1, field1);
   displayBoard(gameboard2, field2, 1);
 
-  displayShipToAdd(3, shipDirection);
-  addShipOnField(gameboard1, field1, 3, shipDirection);
+  displayShipToAdd(shipLength, shipDirection);
+  addShipOnField(gameboard1, field1, shipLength, shipDirection);
   PubSub.subscribe("change_direction", () => {
     shipDirection = changeShipDirection(shipDirection);
-    displayShipToAdd(3, shipDirection);
-    addShipOnField(gameboard1, field1, 3, shipDirection);
+    displayShipToAdd(shipLength, shipDirection);
+    addShipOnField(gameboard1, field1, shipLength, shipDirection);
   });
 };
 

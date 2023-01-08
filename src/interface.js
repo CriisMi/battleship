@@ -165,10 +165,8 @@ function activateBoard1(
 
 function checkIfShipFits(gameBoard, length, direction, i, j) {
   let board = gameBoard.getBoard();
-  console.log(board);
   for (let k = 0; k < length; k++) {
     if (board[i - direction[1] * k][j + direction[0] * k] !== undefined) {
-      console.log([i - direction[1] * k, j + direction[0] * k]);
       return false;
     }
   }

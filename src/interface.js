@@ -1,4 +1,5 @@
 import { game } from "./game";
+import { gameboard } from "./gameboard";
 
 function createBoard(field) {
   for (let j = 0; j < 10; j++) {
@@ -112,31 +113,51 @@ function displayShipToAdd(length, direction) {
 }
 
 function addShipOnField(gameBoard, field, length, direction) {
-  let dir = [];
-  if (direction === 0) {
-    dir = [0, 1];
-  } else if (direction === 3) {
-    dir = [1, 0];
-  } else if (direciton === 6) {
-    dir = [0, -1];
-  } else {
-    dir = [-1, 0];
+  deactivateBoard(gameBoard, field);
+  let board = gameBoard.getBoard();
+  let rowRange = [0, 10];
+  let cellRange = [0, 10];
+  if (direction[1] === 1) {
+    rowRange = [length - 1, 10];
+  } else if (direction[1] === -1) {
+    rowRange = [0, 10 - length + 1];
   }
+  if (direction[0] === 1) {
+    cellRange = [0, 10 - length + 1];
+  } else if (direction[0] === -1) {
+    cellRange = [length - 1, 10];
+  }
+  activateBoard1(gameBoard, field, rowRange, cellRange, length, direction);
+}
+
+function activateBoard1(
+  gameBoard,
+  field,
+  rowRange,
+  cellRange,
+  length,
+  direction
+) {
   let board = gameBoard.getBoard();
   for (let i = 0; i < 10; i++) {
     let row = field.children[i];
     for (let j = 0; j < 10; j++) {
       let cell = row.children[j];
       if (board[i][j] === undefined) {
-        cell.style.backgroundColor = "white";
-      } else if (board[i][j] === -1) {
-        cell.style.backgroundColor = "grey";
-      } else if (board[i][j] === -2) {
-        cell.style.backgroundColor = "red";
-      } else {
-        if (player === 0) {
-          cell.style.backgroundColor = "black";
-        }
+        cell.addEventListener("click", () => {
+          console.log(rowRange);
+          console.log(cellRange);
+          if (
+            i >= rowRange[0] &&
+            i < rowRange[1] &&
+            j >= cellRange[0] &&
+            j < cellRange[1]
+          ) {
+            console.log([i, j]);
+            gameBoard.addShip(length, i, j, direction);
+            displayBoard(gameBoard, field);
+          }
+        });
       }
     }
   }
@@ -150,4 +171,5 @@ export {
   addShipDisplay,
   displayShipToAdd,
   changeShipDirection,
+  addShipOnField,
 };

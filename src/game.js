@@ -3,6 +3,7 @@ import PubSub from "pubsub-js";
 import {
   activateBoard,
   addShipDisplay,
+  addShipOnField,
   changeShipDirection,
   createBoard,
   displayBoard,
@@ -15,11 +16,6 @@ const game = () => {
   addShipDisplay();
   let shipDirection = [0, 1];
   let shipCount = 0;
-  displayShipToAdd(3, shipDirection);
-  PubSub.subscribe("change_direction", () => {
-    shipDirection = changeShipDirection(shipDirection);
-    displayShipToAdd(3, shipDirection);
-  });
 
   let player1 = player();
   player1.changeStatus();
@@ -34,6 +30,14 @@ const game = () => {
 
   displayBoard(gameboard1, field1);
   displayBoard(gameboard2, field2, 1);
+
+  displayShipToAdd(3, shipDirection);
+  addShipOnField(gameboard1, field1, 3, shipDirection);
+  PubSub.subscribe("change_direction", () => {
+    shipDirection = changeShipDirection(shipDirection);
+    displayShipToAdd(3, shipDirection);
+    addShipOnField(gameboard1, field1, 3, shipDirection);
+  });
 
   if (shipCount === 10) {
     activateBoard(gameboard2, field2);

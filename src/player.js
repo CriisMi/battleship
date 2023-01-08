@@ -16,11 +16,18 @@ const player = () => {
     let b = board.getBoard();
     let i;
     let j;
-    do {
-      i = Math.floor(Math.random() * 10);
-      j = Math.floor(Math.random() * 10);
-    } while (b[i][j] === -1 || b[i][j] === -2);
-    return [i, j];
+    let options = [];
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        if (b[i][j] != -1 && b[i][j] != -2) {
+          options.push([i, j]);
+        }
+      }
+    }
+    let x = Math.floor(Math.random() * options.length);
+
+    console.log(options);
+    return options[x];
   };
 
   return { isTurn, changeStatus, hit };

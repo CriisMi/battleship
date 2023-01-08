@@ -4,12 +4,14 @@ import {
   activateBoard,
   addShipDisplay,
   addShipOnField,
+  addShipOnField2,
   changeShipDirection,
   createBoard,
   deactivateBoard,
   displayBoard,
   displayShipToAdd,
   playTurn,
+  returnShipLength,
 } from "./interface";
 import { player } from "./player";
 
@@ -20,15 +22,9 @@ const game = () => {
   let shipLength = 4;
   PubSub.subscribe("ship_added", () => {
     shipCount += 1;
-    if (shipCount > 5) {
-      shipLength = 1;
-    } else if (shipCount > 2) {
-      shipLength = 2;
-    } else if (shipCount > 0) {
-      shipLength = 3;
-    }
-    console.log(shipCount);
+    shipLength = returnShipLength(shipCount);
     if (shipCount >= 10) {
+      displayShipToAdd(0, shipDirection);
       deactivateBoard(gameboard1, field1);
       activateBoard(gameboard2, field2);
       PubSub.subscribe("fired_shot", () => {
@@ -36,7 +32,6 @@ const game = () => {
       });
     } else {
       displayShipToAdd(shipLength, shipDirection);
-
       addShipOnField(gameboard1, field1, shipLength, shipDirection);
     }
   });
@@ -53,6 +48,8 @@ const game = () => {
   createBoard(field2);
 
   displayBoard(gameboard1, field1);
+
+  addShipOnField2(gameboard2);
   displayBoard(gameboard2, field2, 1);
 
   displayShipToAdd(shipLength, shipDirection);

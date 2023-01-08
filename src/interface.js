@@ -64,10 +64,11 @@ function playTurn(player1, player2, gameboard1, gameboard2, field1, field2) {
   if (player1.isTurn()) {
     activateBoard(gameboard2, field2);
   } else {
-    deactivateBoard(gameboard2, field2);
-    let hit = player2.hit(gameboard1);
-    gameboard1.receiveAttack(hit[0], hit[1]);
     setTimeout(() => {
+      deactivateBoard(gameboard2, field2);
+      let hit = player2.hit(gameboard1);
+      gameboard1.receiveAttack(hit[0], hit[1]);
+
       displayBoard(gameboard1, field1);
     }, 500);
   }
@@ -145,15 +146,12 @@ function activateBoard1(
       let cell = row.children[j];
       if (board[i][j] === undefined) {
         cell.addEventListener("click", () => {
-          console.log(rowRange);
-          console.log(cellRange);
           if (
             i >= rowRange[0] &&
             i < rowRange[1] &&
             j >= cellRange[0] &&
             j < cellRange[1]
           ) {
-            console.log([i, j]);
             gameBoard.addShip(length, i, j, direction);
             displayBoard(gameBoard, field);
           }

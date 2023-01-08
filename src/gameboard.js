@@ -31,6 +31,8 @@ const gameboard = () => {
       ships[ship].hit();
       board[i][j] = -2;
     }
+
+    PubSub.publish("fired_shot");
   };
 
   const checkAllSunk = () => {

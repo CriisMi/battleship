@@ -150,7 +150,8 @@ function activateBoard1(
             i >= rowRange[0] &&
             i < rowRange[1] &&
             j >= cellRange[0] &&
-            j < cellRange[1]
+            j < cellRange[1] &&
+            checkIfShipFits(gameBoard, length, direction, i, j)
           ) {
             gameBoard.addShip(length, i, j, direction);
             displayBoard(gameBoard, field);
@@ -159,6 +160,18 @@ function activateBoard1(
       }
     }
   }
+}
+
+function checkIfShipFits(gameBoard, length, direction, i, j) {
+  let board = gameBoard.getBoard();
+  console.log(board);
+  for (let k = 0; k < length; k++) {
+    if (board[i - direction[1] * k][j + direction[0] * k] !== undefined) {
+      console.log([i - direction[1] * k, j + direction[0] * k]);
+      return false;
+    }
+  }
+  return true;
 }
 
 export {

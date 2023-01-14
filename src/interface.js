@@ -95,6 +95,15 @@ function addShipDisplay() {
   container.addEventListener("click", () => {
     PubSub.publish("change_direction");
   });
+  let rules = document.querySelector(".ship");
+  let list = document.createElement("ol");
+  let first = document.createElement("li");
+  first.textContent = "Click the board on the left to change ship orientation.";
+  list.appendChild(first);
+  let second = document.createElement("li");
+  second.textContent = "Click the board under to add your ship.";
+  list.appendChild(second);
+  rules.appendChild(list);
 }
 
 function changeShipDirection(direction) {
@@ -236,11 +245,6 @@ function generateShipBase(board) {
     j = Math.floor(Math.random() * 10);
   } while (b[i][j] !== undefined);
   return [i, j];
-}
-
-function changeStatus() {
-  player1.changeStatus();
-  player2.changeStatus();
 }
 
 export {

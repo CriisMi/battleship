@@ -25,7 +25,7 @@ const game = () => {
     shipCount += 1;
     shipLength = returnShipLength(shipCount);
     if (shipCount >= 10) {
-      let addShipBoard = document.querySelector(".display");
+      let addShipBoard = document.querySelector(".ship");
       while (addShipBoard.firstChild) {
         addShipBoard.removeChild(addShipBoard.lastChild);
       }

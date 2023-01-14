@@ -32,7 +32,15 @@
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
 }
-
 .display > div {
   border: solid 1px lightgrey;
+}
+
+.ship {
+  display: flex;
+  height: 150px;
+}
+
+.ship > ol {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }

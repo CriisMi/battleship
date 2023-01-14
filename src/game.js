@@ -10,6 +10,7 @@ import {
   deactivateBoard,
   displayBoard,
   displayShipToAdd,
+  endGame,
   playTurn,
   returnShipLength,
 } from "./interface";
@@ -63,10 +64,20 @@ const game = () => {
   });
 
   PubSub.subscribe("hit_shot1", () => {
-    playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
+    if (gameboard2.checkAllSunk()) {
+      endGame(1);
+      deactivateBoard(gameboard2, field2);
+    } else {
+      playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
+    }
   });
   PubSub.subscribe("hit_shot2", () => {
-    playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
+    if (gameboard1.checkAllSunk()) {
+      endGame(2);
+      deactivateBoard(gameboard2, field2);
+    } else {
+      playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
+    }
   });
 
   PubSub.subscribe("missed_shot1", () => {

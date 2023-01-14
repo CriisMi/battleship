@@ -247,7 +247,19 @@ function generateShipBase(board) {
   return [i, j];
 }
 
+function endGame(player) {
+  let display = document.querySelector(".ship");
+  let message = "";
+  if (player === 1) {
+    message = "You win!";
+  } else {
+    message = "Computer won";
+  }
+  display.textContent = message;
+}
+
 export {
+  endGame,
   createBoard,
   displayBoard,
   playTurn,

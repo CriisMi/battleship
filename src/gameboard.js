@@ -1,5 +1,4 @@
 import { ship } from "./ship";
-import PubSub from "pubsub-js";
 
 const gameboard = () => {
   let board = [];
@@ -25,14 +24,11 @@ const gameboard = () => {
     if hit cell value will change to -2*/
     if (board[i][j] === undefined) {
       board[i][j] = -1;
-      PubSub.publish("missed_shot");
     } else if (board[i][j] !== -1 && board[i][j] !== -2) {
       let ship = board[i][j];
       ships[ship].hit();
       board[i][j] = -2;
     }
-
-    PubSub.publish("fired_shot");
   };
 
   const checkAllSunk = () => {

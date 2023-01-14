@@ -1,6 +1,7 @@
 import { game } from "./game";
 import { gameboard } from "./gameboard";
 import { player } from "./player";
+import PubSub from "pubsub-js";
 
 function createBoard(field) {
   for (let j = 0; j < 10; j++) {
@@ -47,6 +48,11 @@ function activateBoard(gameBoard, field) {
         cell.addEventListener("click", () => {
           gameBoard.receiveAttack(i, j);
           displayBoard(gameBoard, field, 1);
+          if (gameBoard.getBoard()[i][j] === -1) {
+            PubSub.publish("missed_shot1");
+          } else if (gameBoard.getBoard()[i][j] === -2) {
+            PubSub.publish("hit_shot1");
+          }
         });
       }
     }
@@ -62,15 +68,21 @@ function deactivateBoard(gameBoard, field, player) {
 }
 
 function playTurn(player1, player2, gameboard1, gameboard2, field1, field2) {
+  console.log(player1.isTurn());
   if (player1.isTurn()) {
+    deactivateBoard(gameboard2, field2, 1);
     activateBoard(gameboard2, field2);
   } else {
     setTimeout(() => {
       deactivateBoard(gameboard2, field2, 1);
       let hit = player2.hit(gameboard1);
       gameboard1.receiveAttack(hit[0], hit[1]);
-
       displayBoard(gameboard1, field1);
+      if (gameboard1.getBoard()[hit[0]][hit[1]] === -1) {
+        PubSub.publish("missed_shot2");
+      } else if (gameboard1.getBoard()[hit[0]][hit[1]] === -2) {
+        PubSub.publish("hit_shot2");
+      }
     }, 500);
   }
 }
@@ -225,6 +237,11 @@ function generateShipBase(board) {
     j = Math.floor(Math.random() * 10);
   } while (b[i][j] !== undefined);
   return [i, j];
+}
+
+function changeStatus() {
+  player1.changeStatus();
+  player2.changeStatus();
 }
 
 export {

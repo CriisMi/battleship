@@ -1,5 +1,5 @@
 import { gameboard } from "./gameboard";
-import PubSub from "pubsub-js";
+import PubSub, { publishSync } from "pubsub-js";
 import {
   activateBoard,
   addShipDisplay,
@@ -20,6 +20,7 @@ const game = () => {
   let shipDirection = [0, 1];
   let shipCount = 0;
   let shipLength = 4;
+
   PubSub.subscribe("ship_added", () => {
     shipCount += 1;
     shipLength = returnShipLength(shipCount);
@@ -27,9 +28,8 @@ const game = () => {
       displayShipToAdd(0, shipDirection);
       deactivateBoard(gameboard1, field1);
       activateBoard(gameboard2, field2);
-      PubSub.subscribe("fired_shot", () => {
-        playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
-      });
+
+      playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
     } else {
       displayShipToAdd(shipLength, shipDirection);
       addShipOnField(gameboard1, field1, shipLength, shipDirection);
@@ -58,6 +58,24 @@ const game = () => {
     shipDirection = changeShipDirection(shipDirection);
     displayShipToAdd(shipLength, shipDirection);
     addShipOnField(gameboard1, field1, shipLength, shipDirection);
+  });
+
+  PubSub.subscribe("hit_shot1", () => {
+    playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
+  });
+  PubSub.subscribe("hit_shot2", () => {
+    playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
+  });
+
+  PubSub.subscribe("missed_shot1", () => {
+    player1.changeStatus();
+    player2.changeStatus();
+    playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
+  });
+  PubSub.subscribe("missed_shot2", () => {
+    player1.changeStatus();
+    player2.changeStatus();
+    playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
   });
 };
 

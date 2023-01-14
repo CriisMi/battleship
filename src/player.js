@@ -1,5 +1,3 @@
-import PubSub from "pubsub-js";
-
 const player = () => {
   let isCurrent = false;
   const isTurn = () => isCurrent;
@@ -7,10 +5,6 @@ const player = () => {
   const changeStatus = () => {
     isCurrent = !isCurrent;
   };
-
-  PubSub.subscribe("missed_shot", () => {
-    changeStatus();
-  });
 
   const hit = (board) => {
     let b = board.getBoard();
@@ -25,8 +19,6 @@ const player = () => {
       }
     }
     let x = Math.floor(Math.random() * options.length);
-
-    console.log(options);
     return options[x];
   };
 

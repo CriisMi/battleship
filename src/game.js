@@ -25,10 +25,12 @@ const game = () => {
     shipCount += 1;
     shipLength = returnShipLength(shipCount);
     if (shipCount >= 10) {
-      displayShipToAdd(0, shipDirection);
+      let addShipBoard = document.querySelector(".display");
+      while (addShipBoard.firstChild) {
+        addShipBoard.removeChild(addShipBoard.lastChild);
+      }
       deactivateBoard(gameboard1, field1);
       activateBoard(gameboard2, field2);
-
       playTurn(player1, player2, gameboard1, gameboard2, field1, field2);
     } else {
       displayShipToAdd(shipLength, shipDirection);

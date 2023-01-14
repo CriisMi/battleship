@@ -68,7 +68,6 @@ function deactivateBoard(gameBoard, field, player) {
 }
 
 function playTurn(player1, player2, gameboard1, gameboard2, field1, field2) {
-  console.log(player1.isTurn());
   if (player1.isTurn()) {
     deactivateBoard(gameboard2, field2, 1);
     activateBoard(gameboard2, field2);
